@@ -3,11 +3,16 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed;
-    
-	void Update ()
+    private void OnTriggerEnter(Collider other)
     {
-        transform.Translate(transform.forward * Time.deltaTime * speed);
-        //transform.rotation = Quaternion.identity;
-	}
+        if(other.tag == "Enemy")
+        {
+            other.GetComponent<Health>().TookDamage(2);
+            Destroy(gameObject);
+        }
+        else if(other.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
